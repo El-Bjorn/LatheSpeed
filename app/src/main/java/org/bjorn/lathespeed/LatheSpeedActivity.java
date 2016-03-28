@@ -31,6 +31,13 @@ public class LatheSpeedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lathe_speed);
         ButterKnife.inject(this);
 
+        // set initial values
+        diameterSeekBar.setProgress((int) (1.25 * 100));
+        currentDiameter = 1.25;
+        CSseekBar.setProgress(75);
+        currentCuttingSpeed = 75.0;
+        recalculateRPMs();
+
         // get widget references
         //RPMTextView = (TextView)findViewById(R.id.rpmtextView);
         //RPMseekBar = (SeekBar)findViewById(R.id.rpmSeekBar);
