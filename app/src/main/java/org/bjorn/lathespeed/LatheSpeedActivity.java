@@ -3,8 +3,10 @@ package org.bjorn.lathespeed;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -75,6 +77,15 @@ public class LatheSpeedActivity extends AppCompatActivity {
                 Log.d(TAG, "CS seek bar value = " + progress);
                 CSDisplayView.setText(progress + " (ft/min.)");
                 currentCuttingSpeed = progress;
+                if (RPMcalculator.MATERIAL_SPEEDS_MAP.containsKey(progress)){
+                    //Toast.makeText(this,"Test toast",Toast.LENGTH_SHORT).show();
+                    Toast materialToast = Toast.makeText(getApplicationContext(),
+                            RPMcalculator.MATERIAL_SPEEDS_MAP.get(progress)+" ~"+progress,
+                            Toast.LENGTH_SHORT );
+                    materialToast.setGravity(Gravity.CENTER_HORIZONTAL,0,70);
+                    materialToast.show();
+
+                }
 
                 recalculateRPMs();
 
