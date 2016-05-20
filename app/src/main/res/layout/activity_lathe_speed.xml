@@ -1,81 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
     android:background="#7b7777">
 
-    <!-- RPM Section -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lathe Speed for HSS cutting tool"
-        android:paddingBottom="40dp"
-        android:layout_gravity="center_horizontal" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/topTitle" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cutcircle"
+        android:scaleX="1.0"
+        android:scaleY="1.0"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:padding="20dp"
+        android:alpha="0.5"
+        android:src="@drawable/cutcircle2" />
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="86.41"
-        android:padding="10dp"
+        android:padding="5dp"
+        android:layout_alignParentLeft="true"
         android:id="@+id/rpmDisplayView"
         android:textSize="50sp"
-        android:textColor="#afffffff" />
+        android:textColor="#afffffff"
+        android:layout_below="@+id/topTitle" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="RPM"
-        android:layout_marginBottom="30dp"
+        android:paddingLeft="20dp"
         android:textSize="30sp"
-        android:textColor="#afffffff" />
+        android:textColor="#afffffff"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/rpmDisplayView" />
 
     <!--  Diameter Section -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="5.0 inches"
+        android:text="diameter: 5.0 inches"
         android:id="@+id/diameterDisplayView"
         android:layout_gravity="center_horizontal"
+        android:paddingRight="10dp"
         android:textSize="20sp"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:layout_alignRight="@+id/cutcircle"
+        android:layout_below="@+id/cutcircle" />
 
     <SeekBar
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:id="@+id/diameterSeekBar"
         android:max="500"
-        android:layout_marginTop="10dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Diameter"
-        android:layout_marginBottom="50dp"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#80ffffff" />
+        android:layout_below="@+id/diameterDisplayView"
+        android:layout_alignRight="@+id/cutcircle"
+        android:layout_alignEnd="@+id/cutcircle" />
+
 
     <!-- Cutting-Speed Section -->
-    <TextView
+     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="144.13 (ft/min.)"
+         android:paddingTop="60dp"
+        android:text="cutting speed: 144.13 (ft/min.)"
         android:id="@+id/CSdisplayView"
-        android:layout_gravity="center_horizontal"
+         android:layout_centerInParent="true"
         android:textSize="20sp"
-        android:textColor="#ffffff" />
+         android:textColor="#ffffff"
+         android:layout_below="@+id/diameterSeekBar" />
 
     <SeekBar
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:id="@+id/CSseekBar"
         android:max="300"
-        android:layout_gravity="center_horizontal" />
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/CSdisplayView" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cutting Speed"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#80ffffff" />
+        android:text=""
+        android:layout_centerInParent="true"
+        android:textSize="30sp"
+        android:id="@+id/materialTextView"
+        android:layout_below="@+id/CSseekBar" />
 
-</LinearLayout>
+</RelativeLayout>

@@ -20,6 +20,23 @@ public class RPMcalculator {
         put(250,"Aluminum");
     }};
 
+    public static String materialFromCS (double cutSpeed){
+        if (cutSpeed < 39){
+            return "High-Carbon";
+        } else if (cutSpeed < 46){
+            return "Stainless";
+        } else if (cutSpeed < 66){
+            return "Cast Iron";
+        } else if (cutSpeed < 71){
+            return "Copper";
+        } else if (cutSpeed < 81){
+            return "Mild Steel";
+        } else if (cutSpeed < 151){
+            return "Brass/Bronze";
+        } else {
+            return "Aluminum";
+        }
+    }
 
     public void fuckme(){
         Log.d(TAG,"FUCK");
@@ -30,6 +47,5 @@ public class RPMcalculator {
         Log.d(TAG, "calculated rpms: " + rpms);
 
         return rpms;
-
     }
 }
