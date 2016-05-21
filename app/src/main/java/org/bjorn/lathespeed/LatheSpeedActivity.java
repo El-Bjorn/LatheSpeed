@@ -4,7 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -16,6 +18,8 @@ import butterknife.InjectView;
 public class LatheSpeedActivity extends AppCompatActivity {
 
     public static final String TAG = LatheSpeedActivity.class.getSimpleName();
+    public static final float MIN_DIAMETER = 0.0f;
+    public static final float MAX_DIAMETER = 5.0f;
 
     // buttery widgets
     @InjectView(R.id.rpmDisplayView) TextView RPMDisplayView;
@@ -31,7 +35,8 @@ public class LatheSpeedActivity extends AppCompatActivity {
 
     private double currentDiameter;
     private double currentCuttingSpeed;
-    private ImageView wheel;
+    private ImageView rotatingPiece;
+    private Animation pieceAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +45,11 @@ public class LatheSpeedActivity extends AppCompatActivity {
         ButterKnife.inject(this);
 
         // spinny thing!
-        wheel = (ImageView)findViewById(R.id.cutcircle);
-        wheel.startAnimation(
-                AnimationUtils.loadAnimation(this, R.anim.constant_rotation));
+        rotatingPiece = (ImageView)findViewById(R.id.cutcircle);
+        pieceAnimation = AnimationUtils.loadAnimation(this, R.anim.constant_rotation);
+        //wheel.startAnimation(
+          //      AnimationUtils.loadAnimation(this, R.anim.constant_rotation));
+        rotatingPiece.startAnimation(pieceAnimation);
 
 
         // set initial values
@@ -58,6 +65,7 @@ public class LatheSpeedActivity extends AppCompatActivity {
         //RPMTextView = (TextView)findViewById(R.id.rpmtextView);
         //RPMseekBar = (SeekBar)findViewById(R.id.rpmSeekBar);
 
+        // DIAMETER
         diameterSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -65,6 +73,12 @@ public class LatheSpeedActivity extends AppCompatActivity {
                 double diameter = (double)progress / 100;
                 diameterDisplayView.setText("diameter: "+diameter+" inches");
                 currentDiameter = diameter;
+
+                // change piece animation
+                float diamScale = (float) (diameter/MAX_DIAMETER);
+                Log.d(TAG,"diam scale= "+diamScale);
+                rotatingPiece.setScaleX(diamScale);
+                rotatingPiece.setScaleY(diamScale);
 
                 recalculateRPMs();
                 
@@ -89,6 +103,9 @@ public class LatheSpeedActivity extends AppCompatActivity {
                 currentCuttingSpeed = progress;
                 //String materialString =
                 materialDisplayView.setText(RPMcalculator.materialFromCS(progress));
+
+                //rotatingPiece.setScaleX(0.5f);
+                //rotatingPiece.setScaleY(0.5f);
                 /*if (RPMcalculator.MATERIAL_SPEEDS_MAP.containsKey(progress)){
                     //Toast.makeText(this,"Test toast",Toast.LENGTH_SHORT).show();
                     Toast materialToast = Toast.makeText(getApplicationContext(),
@@ -122,6 +139,11 @@ public class LatheSpeedActivity extends AppCompatActivity {
         Log.d(TAG,"reculated rpms: "+newRPMs);
 
         RPMDisplayView.setText( String.format("%.1f",newRPMs));
+
+        double rotDuration = (1.0/(newRPMs/6000))*10.0;
+        Log.d(TAG,"new rotation duration= "+rotDuration);
+
+        pieceAnimation.setDuration(Math.round(rotDuration));
 
     }
 }
