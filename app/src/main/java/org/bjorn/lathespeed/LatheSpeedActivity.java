@@ -51,6 +51,9 @@ public class LatheSpeedActivity extends AppCompatActivity {
           //      AnimationUtils.loadAnimation(this, R.anim.constant_rotation));
         rotatingPiece.startAnimation(pieceAnimation);
 
+        //calculateRPMsKt.tstin();
+        Log.d(TAG, latheUtils.RPMcalcKt.tst());
+
 
         // set initial values
         diameterSeekBar.setProgress((int) (1.25 * 100));
@@ -102,7 +105,8 @@ public class LatheSpeedActivity extends AppCompatActivity {
                 CSDisplayView.setText("cutting speed: " + progress + " (ft/min.)");
                 currentCuttingSpeed = progress;
                 //String materialString =
-                materialDisplayView.setText(RPMcalculator.materialFromCS(progress));
+                //materialDisplayView.setText(RPMcalculator.materialFromCS(progress));
+                materialDisplayView.setText(latheUtils.RPMcalcKt.materialNameFromCutSpeed(progress));
 
                 //rotatingPiece.setScaleX(0.5f);
                 //rotatingPiece.setScaleY(0.5f);
@@ -116,7 +120,7 @@ public class LatheSpeedActivity extends AppCompatActivity {
 
                 } */
 
-                recalculateRPMs();
+                        recalculateRPMs();
 
             }
 
