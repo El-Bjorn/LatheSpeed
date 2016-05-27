@@ -9,6 +9,12 @@ fun tst(): String{
     return "boo"
 }
 
+fun rpmFromDiamAndCS(currentDiameter:Double, currentCuttingSpeed:Double): Double {
+    var rpms:Double = (currentCuttingSpeed * 12.0) / (Math.PI * currentDiameter)
+
+    return rpms
+}
+
 fun materialNameFromCutSpeed(cutSpeed:Double): String {
     val cutSpeedMap = hashMapOf(38 to "High-Carbon",
                                 45 to "Stainless",

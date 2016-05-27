@@ -60,7 +60,8 @@ public class LatheSpeedActivity extends AppCompatActivity {
         currentDiameter = 1.25;
         CSseekBar.setProgress(75);
         currentCuttingSpeed = 75.0;
-        materialDisplayView.setText(RPMcalculator.materialFromCS(currentCuttingSpeed));
+        //materialDisplayView.setText(RPMcalculator.materialFromCS(currentCuttingSpeed));
+        materialDisplayView.setText(latheUtils.RPMcalcKt.materialNameFromCutSpeed(currentCuttingSpeed));
 
         recalculateRPMs();
 
@@ -108,19 +109,7 @@ public class LatheSpeedActivity extends AppCompatActivity {
                 //materialDisplayView.setText(RPMcalculator.materialFromCS(progress));
                 materialDisplayView.setText(latheUtils.RPMcalcKt.materialNameFromCutSpeed(progress));
 
-                //rotatingPiece.setScaleX(0.5f);
-                //rotatingPiece.setScaleY(0.5f);
-                /*if (RPMcalculator.MATERIAL_SPEEDS_MAP.containsKey(progress)){
-                    //Toast.makeText(this,"Test toast",Toast.LENGTH_SHORT).show();
-                    Toast materialToast = Toast.makeText(getApplicationContext(),
-                            RPMcalculator.MATERIAL_SPEEDS_MAP.get(progress)+" ~"+progress,
-                            Toast.LENGTH_SHORT );
-                    materialToast.setGravity(Gravity.CENTER_HORIZONTAL,0,70);
-                    materialToast.show();
-
-                } */
-
-                        recalculateRPMs();
+                recalculateRPMs();
 
             }
 
@@ -138,7 +127,8 @@ public class LatheSpeedActivity extends AppCompatActivity {
 
     private void recalculateRPMs() {
         RPMcalculator calculator = new RPMcalculator();
-        double newRPMs = calculator.rpmFromDiamAndCS(currentDiameter,currentCuttingSpeed);
+        //double newRPMs = calculator.rpmFromDiamAndCS(currentDiameter,currentCuttingSpeed);
+        double newRPMs = latheUtils.RPMcalcKt.rpmFromDiamAndCS(currentDiameter, currentCuttingSpeed);
 
         Log.d(TAG,"reculated rpms: "+newRPMs);
 
