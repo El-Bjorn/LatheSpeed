@@ -3,14 +3,14 @@ package org.bjorn.lathespeed;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
+//import android.view.Gravity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
+//import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
+//import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -31,7 +31,7 @@ public class LatheSpeedActivity extends AppCompatActivity {
     @InjectView(R.id.CSseekBar) SeekBar CSseekBar;
     // material
     @InjectView(R.id.materialTextView) TextView materialDisplayView;
-    //@InjectView(R.id.cutcircle) ImageView cutCircleImage;
+
 
     private double currentDiameter;
     private double currentCuttingSpeed;
@@ -51,23 +51,18 @@ public class LatheSpeedActivity extends AppCompatActivity {
           //      AnimationUtils.loadAnimation(this, R.anim.constant_rotation));
         rotatingPiece.startAnimation(pieceAnimation);
 
-        //calculateRPMsKt.tstin();
-        Log.d(TAG, latheUtils.RPMcalcKt.tst());
-
-
         // set initial values
         diameterSeekBar.setProgress((int) (1.25 * 100));
         currentDiameter = 1.25;
+        diameterDisplayView.setText("diameter: " + 1.25 + " inches");
         CSseekBar.setProgress(75);
         currentCuttingSpeed = 75.0;
+        CSDisplayView.setText("cutting speed: " + 75.0 + " (ft/min.)");
         //materialDisplayView.setText(RPMcalculator.materialFromCS(currentCuttingSpeed));
         materialDisplayView.setText(latheUtils.RPMcalcKt.materialNameFromCutSpeed(currentCuttingSpeed));
-
         recalculateRPMs();
+        updatePieceAnimation();
 
-        // get widget references
-        //RPMTextView = (TextView)findViewById(R.id.rpmtextView);
-        //RPMseekBar = (SeekBar)findViewById(R.id.rpmSeekBar);
 
         // DIAMETER
         diameterSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -75,14 +70,11 @@ public class LatheSpeedActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 Log.d(TAG, "diameter seek bar value = " + progress);
                 double diameter = (double)progress / 100;
-                diameterDisplayView.setText("diameter: "+diameter+" inches");
+                diameterDisplayView.setText("diameter: " + diameter + " inches");
                 currentDiameter = diameter;
 
-                // change piece animation
-                float diamScale = (float) (diameter/MAX_DIAMETER);
-                Log.d(TAG,"diam scale= "+diamScale);
-                rotatingPiece.setScaleX(diamScale);
-                rotatingPiece.setScaleY(diamScale);
+                updatePieceAnimation();
+
 
                 recalculateRPMs();
                 
@@ -110,7 +102,6 @@ public class LatheSpeedActivity extends AppCompatActivity {
                 materialDisplayView.setText(latheUtils.RPMcalcKt.materialNameFromCutSpeed(progress));
 
                 recalculateRPMs();
-
             }
 
             @Override
@@ -125,17 +116,25 @@ public class LatheSpeedActivity extends AppCompatActivity {
         });
     }
 
+    private void updatePieceAnimation() {
+        // change piece animation
+        float diamScale = (float) (currentDiameter/MAX_DIAMETER);
+        Log.d(TAG,"diam scale= "+diamScale);
+        rotatingPiece.setScaleX(diamScale);
+        rotatingPiece.setScaleY(diamScale);
+
+
+    }
+
     private void recalculateRPMs() {
-        RPMcalculator calculator = new RPMcalculator();
-        //double newRPMs = calculator.rpmFromDiamAndCS(currentDiameter,currentCuttingSpeed);
         double newRPMs = latheUtils.RPMcalcKt.rpmFromDiamAndCS(currentDiameter, currentCuttingSpeed);
 
         Log.d(TAG,"reculated rpms: "+newRPMs);
 
-        RPMDisplayView.setText( String.format("%.1f",newRPMs));
+        RPMDisplayView.setText(String.format("%.1f", newRPMs));
 
         double rotDuration = (1.0/(newRPMs/6000))*10.0;
-        Log.d(TAG,"new rotation duration= "+rotDuration);
+        Log.d(TAG, "new rotation duration= " + rotDuration);
 
         pieceAnimation.setDuration(Math.round(rotDuration));
 

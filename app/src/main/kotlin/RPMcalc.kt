@@ -4,10 +4,7 @@
 package latheUtils
 
 import android.util.Log
-
-fun tst(): String{
-    return "boo"
-}
+val TAG = "RPMcalc.kt"
 
 fun rpmFromDiamAndCS(currentDiameter:Double, currentCuttingSpeed:Double): Double {
     var rpms:Double = (currentCuttingSpeed * 12.0) / (Math.PI * currentDiameter)
@@ -15,16 +12,18 @@ fun rpmFromDiamAndCS(currentDiameter:Double, currentCuttingSpeed:Double): Double
     return rpms
 }
 
+// cutting speeds in FPM
 fun materialNameFromCutSpeed(cutSpeed:Double): String {
-    val cutSpeedMap = hashMapOf(38 to "High-Carbon",
-                                45 to "Stainless",
-                                65 to "Cast Iron",
-                                70 to "Copper",
-                                80 to "Mild Steel",
-                                150 to "Brass/Bronze",
-                                250 to "Aluminum")
+    val cutSpeedMap = hashMapOf(80 to "High-Carbon",
+                                110 to "Stainless",
+                                150 to "Cast Iron",
+                                100 to "Mild Steel",
+                                210 to "Brass/Bronze",
+                                550 to "Aluminum",
+                                700 to "Cast Aluminum")
 
     val nearest = cutSpeedMap.keys.minBy { Math.abs(it-cutSpeed)}
+    Log.d(TAG,"CS:"+cutSpeed+" nearest to:"+nearest+" material:"+cutSpeedMap[nearest])
 
     return cutSpeedMap[nearest] as String
 }
